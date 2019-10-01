@@ -5,6 +5,8 @@ module "vault_cluster" {
   subnets      = tolist(data.aws_subnet_ids.tier2_subnets.ids)
   vpc_id       = var.vpc
 
+  workers_additional_policies = [aws_iam_policy.vault_server_policy.arn]
+
   worker_groups = [
     {
       instance_type        = var.instance_type
@@ -19,9 +21,12 @@ module "vault_cluster" {
     }
   ]
 
-  tags = {
-    environment = var.env
-    owner       = var.team_name
-    group       = "vault"
-  }
+  tags = merge(
+    {
+      "environment" = var.env
+      "owner"       = var.team_name
+    },
+    var.tags,
+  )
+
 }
