@@ -1,5 +1,20 @@
+resource "random_pet" "bucket_prefix" {
+  keepers = {
+    # Generate a new pet name each time we switch to a new AMI id
+    bucket_prefix = "${var.name_prefix}"
+  }
+  prefix    = var.name_prefix
+  separator = "-"
+  length    = 1
+}
+
+locals {
+  resources_bucket = "${random_pet.bucket_prefix.id}-resources"
+  data_bucket      = "${random_pet.bucket_prefix.id}-data"
+}
+
 resource "aws_s3_bucket" "vault_resources" {
-  bucket        = "${var.team_name}-${var.name_prefix}-resources"
+  bucket        = local.resources_bucket
   region        = var.region
   force_destroy = true
 
@@ -10,7 +25,7 @@ resource "aws_s3_bucket" "vault_resources" {
   }
 
   logging {
-    target_bucket = "${var.team_name}-${var.name_prefix}-resources"
+    target_bucket = local.resources_bucket
     target_prefix = "logs/s3_access_logs/"
   }
 
@@ -62,7 +77,7 @@ resource "aws_s3_bucket" "vault_resources" {
 
   tags = merge(
     {
-      "Name"        = "${var.team_name}-${var.name_prefix}-resources"
+      "Name"        = "${var.name_prefix}-resources"
       "environment" = var.env
       "owner"       = var.team_name
     },
@@ -71,8 +86,9 @@ resource "aws_s3_bucket" "vault_resources" {
 }
 
 resource "aws_s3_bucket_policy" "vault_resources" {
-  bucket = aws_s3_bucket.vault_resources.id
-  policy = data.aws_iam_policy_document.s3_vault_resources_bucket_policy.json
+  bucket     = aws_s3_bucket.vault_resources.id
+  policy     = data.aws_iam_policy_document.s3_vault_resources_bucket_policy.json
+  depends_on = [aws_s3_bucket_public_access_block.vault_resources]
 }
 
 resource "aws_s3_bucket_public_access_block" "vault_resources" {
@@ -115,7 +131,7 @@ resource "aws_s3_bucket_public_access_block" "vault_resources" {
 #   var.tags)}"
 # }
 resource "aws_s3_bucket" "vault_data" {
-  bucket        = "${var.team_name}-${var.name_prefix}-data"
+  bucket        = local.data_bucket
   region        = var.region
   force_destroy = true
 
@@ -153,7 +169,7 @@ resource "aws_s3_bucket" "vault_data" {
 
   tags = merge(
     {
-      "Name"        = "${var.team_name}-${var.name_prefix}-data"
+      "Name"        = "${var.name_prefix}-data"
       "environment" = var.env
       "owner"       = var.team_name
     },
