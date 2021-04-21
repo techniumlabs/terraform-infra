@@ -21,7 +21,27 @@ module "vpc" {
   public_dedicated_network_acl = var.public_dedicated_network_acl
   private_dedicated_network_acl = var.private_dedicated_network_acl
   database_dedicated_network_acl = var.database_dedicated_network_acl
+  # database_inbound_acl_rules = [
+  #   {
+  #     "cidr_block": "0.0.0.0/0",
+  #     "from_port": 0,
+  #     "protocol": "-1",
+  #     "rule_action": "deny",
+  #     "rule_number": 100,
+  #     "to_port": 0
+  #   }
+  # ]
 
+  # database_outbound_acl_rules = [
+  #   {
+  #     "cidr_block": "0.0.0.0/0",
+  #     "from_port": 0,
+  #     "protocol": "-1",
+  #     "rule_action": "deny",
+  #     "rule_number": 100,
+  #     "to_port": 0
+  #   }
+  # ]
   tags = {
     Terraform = "true"
     Environment = var.env
