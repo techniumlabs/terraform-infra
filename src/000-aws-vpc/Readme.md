@@ -24,7 +24,7 @@ This is where you review changes and choose whether to simply accept them
 ```bash
 /000-aws-vpc$ terraform plan
 ```
-## apply
+## Apply
 This is where you accept changes and apply them against real infrastructure
 ```bash
 /000-aws-vpc$ terraform apply

@@ -27,7 +27,7 @@ This is where you review changes and choose whether to simply accept them
 ```bash
 /100-eks-cluster$ terraform plan
 ```
-## apply
+## Apply
 This is where you accept changes and apply them against real infrastructure
 ```bash
 /100-eks-cluster$ terraform apply
