@@ -29,5 +29,3 @@ This is where you accept changes and apply them against real infrastructure
 ```bash
 /000-aws-vpc$ terraform apply
 ```
-# aws-node-termination-handler
-Suppose if have been choose spot instances, follow this [link](https://artifacthub.io/packages/helm/aws/aws-node-termination-handler) to add aws-node-termination-handler to your pods. By using this  you can avoid  your application downtime
