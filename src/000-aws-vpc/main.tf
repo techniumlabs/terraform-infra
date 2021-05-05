@@ -2,6 +2,11 @@ provider "aws" {
   region = var.region
 }
 
+terraform {
+  backend "s3" {
+  }
+}
+
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
   name = var.name
