@@ -2,10 +2,10 @@ provider "aws" {
     region = "us-east-1"
 }
 
-# terraform {
-#   backend "s3" {
-#   }
-# }
+terraform {
+  backend "s3" {
+  }
+}
 
 data "aws_eks_cluster" "cluster" {
     name = module.my-cluster.cluster_id
