@@ -2,11 +2,15 @@ region = "us-east-1"
 cluster_name = "my-eks"
 cluster_version = "1.19"
 vpc_name = "my-vpc"
-worker_groups_launch_template_name = "spot-1"
-override_instance_types = ["t3.medium","t3.small"]
-spot_instance_pools = 2
-asg_max_size= 2
-asg_desired_capacity = 2
-kubelet_extra_args = "--node-labels=node.kubernetes.io/lifecycle=spot"
-root_volume_type = "gp2"
-   
+node_groups_name = "spot-1"
+instance_types = ["t3.medium","t3.small"]
+max_capacity = 2
+min_capacity= 1
+desired_capacity = 2
+capacity_type = "SPOT"
+k8s_labels = {
+    environment = "dev"
+}
+ng_additional_tags = {
+    Name= "Test"
+}

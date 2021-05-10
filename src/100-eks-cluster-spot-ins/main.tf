@@ -2,10 +2,10 @@ provider "aws" {
     region = "us-east-1"
 }
 
-terraform {
-  backend "s3" {
-  }
-}
+# terraform {
+#   backend "s3" {
+#   }
+# }
 
 data "aws_eks_cluster" "cluster" {
     name = module.my-cluster.cluster_id
@@ -58,17 +58,30 @@ module "my-cluster" {
     vpc_id          = data.aws_vpc.selected.id
     enable_irsa     = true
 
-     worker_groups_launch_template = [
-    {
-      name                    = var.worker_groups_launch_template_name
-      override_instance_types = var.override_instance_types
-      spot_instance_pools     = var.spot_instance_pools
-      asg_max_size            = var.asg_max_size
-      asg_desired_capacity    = var.asg_desired_capacity
-      kubelet_extra_args      = var.kubelet_extra_args
-      root_volume_type        = var.root_volume_type
+    node_groups = {
+
+       node_group = {
+        desired_capacity = var.desired_capacity
+        max_capacity     = var.max_capacity
+        min_capacity     = var.min_capacity
+        instance_types   = var.instance_types
+        capacity_type    = var.capacity_type
+        k8s_labels       = var.k8s_labels
+        additional_tags  = var.ng_additional_tags
+      }
     }
-  ]
+    
+  #    worker_groups_launch_template = [
+  #   {
+  #     name                    = "spot-1"
+  #     override_instance_types = ["m5.large", "m5a.large", "m5d.large", "m5ad.large"]
+  #     spot_instance_pools     = 4
+  #     asg_max_size            = 5
+  #     asg_desired_capacity    = 5
+  #     kubelet_extra_args      = "--node-labels=node.kubernetes.io/lifecycle=spot"
+  #     public_ip               = true
+  #   },
+  # ] 
 }
 
 
