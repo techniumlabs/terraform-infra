@@ -14,31 +14,33 @@ variable "vpc_name" {
   type = string
 } 
    
-variable "worker_groups_launch_template_name" {
+variable "node_groups_name" {
   type = string
 } 
  
-variable "override_instance_types" {
+variable "instance_types" {
   type = list(string)
 } 
   
-variable "spot_instance_pools" {
+variable "min_capacity" {
   type = number
 } 
      
-variable "asg_max_size" {
+variable "max_capacity" {
   type = number
 } 
       
-variable "asg_desired_capacity" {
+variable "desired_capacity" {
   type = number
 } 
       
-variable "kubelet_extra_args" {
+variable "k8s_labels" {
+  type = map
+} 
+variable "capacity_type" {
   type = string
-} 
+}
 
-variable "root_volume_type" {
-  type = string
-} 
-      
+variable "ng_additional_tags" {
+  type = map
+}
