@@ -1,5 +1,5 @@
  location     = "east US"
- role_definition_name = "acrpull"
+ role_definition_name = "AcrPull"
  registry_name = "techniumrca"
  registry_sku = "Standard"
  resource_group_name = "py_test"
@@ -10,13 +10,13 @@
  dnp_name = "default"
  dnp_vm_size = "Standard_D2_v2"
  aks_identity = "SystemAssigned"
- windows_profile_username = "winnam"
- windows_profile_password = "Akswinpassword12"
+ windows_profile_username = "techni"
+ windows_profile_password = "Techniumlabs12$"
  network_profile_plugin = "azure"
  network_profile_policy = "azure"
  service_ip = "10.1.0.0/24"
  docker_bridge_cidr = "172.18.0.1/16"
- win_pool_name = "winpol"
+ win_pool_name = "techni"
  wnp_vm_size = "Standard_D2s_v3"
  wnp_node_count = 2
  dnp_node_count = 1
