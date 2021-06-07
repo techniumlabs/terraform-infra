@@ -16,22 +16,6 @@ data "azurerm_subnet" "subnet" {
   resource_group_name  = var.resource_group_name
 }
 
-resource "azurerm_role_assignment" "role_acrpull" {
-      scope = azurerm_container_registry.acr.id
-      role_definition_name = var.role_definition_name
-      principal_id = azurerm_kubernetes_cluster.aks.kubelet_identity.0.object_id
-      skip_service_principal_aad_check = true
-}
-
-resource "azurerm_container_registry" "acr" {
-      name = var.registry_name
-      resource_group_name = var.resource_group_name
-      location = var.location
-      sku = var.registry_sku
-      admin_enabled = false
-}
-
-
 
 resource "azurerm_kubernetes_cluster" "aks" {
     name                = var.aks_name
@@ -71,4 +55,20 @@ resource "azurerm_kubernetes_cluster_node_pool" "win" {
   os_type               = "Windows"
   vnet_subnet_id = data.azurerm_subnet.subnet.id
  
+}
+
+
+resource "azurerm_container_registry" "acr" {
+      name = var.registry_name
+      resource_group_name = var.resource_group_name
+      location = var.location
+      sku = var.registry_sku
+      admin_enabled = false
+}
+
+resource "azurerm_role_assignment" "role_acr" {
+      scope = azurerm_container_registry.acr.id
+      role_definition_name = var.role_definition_name
+      principal_id = azurerm_kubernetes_cluster.aks.kubelet_identity.0.object_id
+      skip_service_principal_aad_check = true
 }
