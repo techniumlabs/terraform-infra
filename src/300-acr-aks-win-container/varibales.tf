@@ -14,7 +14,7 @@ variable registry_sku {
     type = string
 }
 
-variable resource_name {
+variable resource_group_name {
     type = string
 }
 
@@ -38,7 +38,7 @@ variable dnp_name {
     type = string
 }
 
-variable dnp_vm_size = {
+variable dnp_vm_size {
     type = string
 }
 
@@ -72,9 +72,13 @@ variable win_pool_name {
 }
 
 variable wnp_vm_size {
-    type = number
+    type = string
 }
 
 variable dnp_node_count {
+    type = number
+}
+
+variable wnp_node_count {
     type = number
 }
