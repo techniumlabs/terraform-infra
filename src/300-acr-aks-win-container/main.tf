@@ -7,13 +7,13 @@ provider "azurerm" {
 
 data "azurerm_virtual_network" "aks" {
   name                = var.vnet_name
-  resource_group_name = var.resource_name
+  resource_group_name = var.resource_group_name
 }
 
 data "azurerm_subnet" "subnet" {
   name                 = var.subnet_name
   virtual_network_name = var.vnet_name
-  resource_group_name  = var.resource_name
+  resource_group_name  = var.resource_group_name
 }
 
 resource "azurerm_role_assignment" "role_acrpull" {
@@ -25,7 +25,7 @@ resource "azurerm_role_assignment" "role_acrpull" {
 
 resource "azurerm_container_registry" "acr" {
       name = var.registry_name
-      resource_group_name = var.resource_name
+      resource_group_name = var.resource_group_name
       location = var.location
       sku = var.registry_sku
       admin_enabled = false
@@ -36,7 +36,7 @@ resource "azurerm_container_registry" "acr" {
 resource "azurerm_kubernetes_cluster" "aks" {
     name                = var.aks_name
     location            = var.location
-    resource_group_name = var.resource_name
+    resource_group_name = var.resource_group_name
     dns_prefix          = var.dns_prefix
     default_node_pool {
       name       = var.dnp_name
