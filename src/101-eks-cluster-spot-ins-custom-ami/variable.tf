@@ -48,3 +48,21 @@ variable "capacity_type" {
 variable "ng_additional_tags" {
   type = map
 }
+
+variable volume_size {
+  type = number
+}
+variable volume_type {
+  type = string
+}
+variable delete_on_termination {
+  type = string
+}
+
+variable device_name {
+  type = string
+}
+
+variable owners {
+  type = list(string)
+}
