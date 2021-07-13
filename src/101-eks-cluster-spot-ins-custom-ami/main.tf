@@ -2,10 +2,10 @@ provider "aws" {
     region = var.region
 }
 
-# terraform {
-#   backend "s3" {
-#   }
-# }
+terraform {
+  backend "s3" {
+  }
+}
 
 data "aws_eks_cluster" "cluster" {
     name = module.my-cluster.cluster_id
@@ -15,8 +15,8 @@ data "aws_eks_cluster_auth" "cluster" {
     name = module.my-cluster.cluster_id
 }
 
-data "aws_ami_ids" "ubuntu" {
-  # owners = ["343434343"]
+data "aws_ami_ids" "custom" {
+  owners = var.owners
 
   filter {
     name   = "name"
@@ -67,31 +67,33 @@ module "my-cluster" {
     vpc_id          = data.aws_vpc.selected.id
     enable_irsa     = true
 
-    # node_groups = {
+    node_groups = {
 
-    #    node_group = {
-    #     desired_capacity = var.desired_capacity
-    #     max_capacity     = var.max_capacity
-    #     min_capacity     = var.min_capacity
-    #     instance_types   = var.instance_types
-    #     capacity_type    = var.capacity_type
-    #     k8s_labels       = var.k8s_labels
-    #     additional_tags  = var.ng_additional_tags
-    #   }
-    # }
+       node_group = {
+        desired_capacity = var.desired_capacity
+        max_capacity     = var.max_capacity
+        min_capacity     = var.min_capacity
+        instance_types   = var.instance_types
+        capacity_type    = var.capacity_type
+        k8s_labels       = var.k8s_labels
+        additional_tags  = var.ng_additional_tags
+        launch_template_id      = aws_launch_template.default.id
+        launch_template_version = aws_launch_template.default.default_version
+      }
+    }
     
-     worker_groups_launch_template = [
-    {
-      name                    = "spot-1"
-      ami_id                  = data.aws_ami_ids.ubuntu.ids[0]
-      override_instance_types = ["m5.large", "m5a.large", "m5d.large", "m5ad.large"]
-      spot_instance_pools     = 4
-      asg_max_size            = 5
-      asg_desired_capacity    = 5
-      kubelet_extra_args      = "--node-labels=node.kubernetes.io/lifecycle=spot"
-      public_ip               = true
-    },
-  ] 
+  #    worker_groups_launch_template = [
+  #   {
+  #     name                    = "spot-1"
+  #     ami_id                  = data.aws_ami_ids.custom.ids[0]
+  #     override_instance_types = ["t3.small", "t3.medium"]
+  #     spot_instance_pools     = 4
+  #     asg_max_size            = 5
+  #     asg_desired_capacity    = 5
+  #     kubelet_extra_args      = "--node-labels=node.kubernetes.io/lifecycle=spot"
+  #     public_ip               = true
+  #   },
+  # ] 
 }
 
 
