@@ -73,4 +73,4 @@ Suppose if have been choose spot instances, follow this [link](https://artifacth
 11. Deploy your application with deployment, service ingress for ALB [more info](https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html) 
 
 
-12. Deploy your application with deployment, service ingress for ALB [more info](https://docs.aws.amazon.com/eks/latest/userguide/load-balancing.html) 
+12. Deploy your application with deployment, service ingress for NLB [more info](https://docs.aws.amazon.com/eks/latest/userguide/load-balancing.html) 
