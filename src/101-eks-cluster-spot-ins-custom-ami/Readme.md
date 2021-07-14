@@ -1,4 +1,4 @@
-#SSM config
+# SSM config
     1. Create the ami using [packer](https://github.com/awslabs/amazon-eks-ami)
     2. Update image id in terraform variable file
     3. Add the AmazonSSMFullAccess and AmazonSSMManagedInstanceCore policies in EKS role and restart the all nodes 
