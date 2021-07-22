@@ -48,10 +48,27 @@ Suppose if have been choose spot instances, follow this [link](https://artifacth
   --set clusterName=<cluster-name> \
   --set serviceAccount.create=false \
   --set serviceAccount.name=aws-load-balancer-controller \
+  --set region=<region>\
+  --set vpcId=<vpc-id>
   -n kube-system
 ```
 [more info](https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html)
 
+8. Rollout aws-load-balancer-controller deployment for move to fargate
+    ```barsh
+        kubectl -n kube-system rollout status deployment aws-load-balancer-controller
+    ```
+
+9. Deploy **coredns** into fargate
+    1. Remove the ec2 instance annotation in codedns deployment
+        ```bash
+            eks.amazonaws.com/compute-type : ec2 
+        ```
+    2. Rollout **coredns** deployment for move to fargate
+
+        ```barsh
+            kubectl -n kube-system rollout status deployment codedns
+        ```
 8. Add public and private subnet tags
 
     - Key – kubernetes.io/cluster/<cluster-name>
@@ -73,4 +90,4 @@ Suppose if have been choose spot instances, follow this [link](https://artifacth
 11. Deploy your application with deployment, service ingress for ALB [more info](https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html) 
 
 
-12. Deploy your application with deployment, service ingress for NLB [more info](https://docs.aws.amazon.com/eks/latest/userguide/load-balancing.html) 
+12. Deploy your network with deployment, service ingress for NLB [more info](https://docs.aws.amazon.com/eks/latest/userguide/load-balancing.html) 

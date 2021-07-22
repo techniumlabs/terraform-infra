@@ -1,11 +1,11 @@
 provider "aws" {
-   region = var.region
+    region = var.region
 }
 
-terraform {
-  backend "s3" {
-  }
-}
+# terraform {
+#   backend "s3" {
+#   }
+# }
 
 data "aws_eks_cluster" "cluster" {
     name = module.my-cluster.cluster_id
@@ -57,7 +57,6 @@ module "my-cluster" {
     subnets         = local.private_subnet
     vpc_id          = data.aws_vpc.selected.id
     enable_irsa     = true
-
     node_groups = {
 
        node_group = {
@@ -70,18 +69,18 @@ module "my-cluster" {
         additional_tags  = var.ng_additional_tags
       }
     }
+     fargate_profiles = {
+    default = {
+      name = "default"
+      selectors = var.fargate_selectors
+
     
-  #    worker_groups_launch_template = [
-  #   {
-  #     name                    = "spot-1"
-  #     override_instance_types = ["m5.large", "m5a.large", "m5d.large", "m5ad.large"]
-  #     spot_instance_pools     = 4
-  #     asg_max_size            = 5
-  #     asg_desired_capacity    = 5
-  #     kubelet_extra_args      = "--node-labels=node.kubernetes.io/lifecycle=spot"
-  #     public_ip               = true
-  #   },
-  # ] 
+
+      tags = {
+        Owner = "test"
+      }
+    }
+  }
 }
 
 
