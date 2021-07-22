@@ -1,19 +1,28 @@
-
+# SSM config
+   1. Create the ami using [packer](https://github.com/awslabs/amazon-eks-ami)
+   2. Update image id in terraform variable file
+   3. Add the AmazonSSMFullAccess and AmazonSSMManagedInstanceCore policies in EKS role and restart the all nodes 
+    
 # Config
 config your EKS cluster details in `terraform.tfvar` file
 ```note
-    region = "us-east-1"
-    cluster_name = "my-eks"
-    cluster_version = "1.19"
-    vpc_name = "my-vpc"
-    node_groups_name = "spot-1"
-    instance_types = ["t3.medium","t3.small"]
-    max_capacity = 2
-    min_capacity= 1
-    desired_capacity = 2
-    capacity_type = "SPOT"
-    k8s_labels = {
+region = "us-west-2"
+ami_name = "amazon-eks-node-1.15-*"
+cluster_name = "my-eks"
+cluster_version = "1.19"
+vpc_name = "my-vpc"
+node_groups_name = "spot-1"
+instance_types = ["t3.medium","t3.small"]
+max_capacity = 2
+min_capacity= 1
+desired_capacity = 2
+capacity_type = "SPOT"
+k8s_labels = {
     environment = "dev"
+}
+ng_additional_tags = {
+    Name= "Test"
+}
 ```
 # Terraform
 
@@ -74,3 +83,4 @@ Suppose if have been choose spot instances, follow this [link](https://artifacth
 
 
 12. Deploy your application with deployment, service ingress for NLB [more info](https://docs.aws.amazon.com/eks/latest/userguide/load-balancing.html) 
+    
