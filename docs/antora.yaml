@@ -1,4 +1,4 @@
-name: terraform infra
+name: terraform-infra
 title: Terraform Infra
 version: 1.5.6
 start_page: ROOT:aws-vpn.adoc
