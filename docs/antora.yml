@@ -1,6 +1,6 @@
 name: terraform-infra
 title: Terraform Infra
 version: 1.5.6
-start_page: ROOT:aws-vpn.adoc
-# nav:
-# - modules/ROOT/nav.adoc
+start_page: ROOT:aws-vpc.adoc
+nav:
+- modules/ROOT/nav.adoc
